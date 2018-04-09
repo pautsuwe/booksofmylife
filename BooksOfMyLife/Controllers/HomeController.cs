@@ -11,6 +11,12 @@ namespace BooksOfMyLife.Controllers
 {
     public class HomeController : Controller
     {
+        private IBookManager _bookManager { get; set; }
+        public HomeController(IBookManager bookManager)
+        {
+            _bookManager = bookManager;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -32,16 +38,14 @@ namespace BooksOfMyLife.Controllers
 
         public ActionResult AddBook()
         {
-            BookManager bookManager = new BookManager();
             BookModel model = new BookModel();
-            //model.PossibleGenres = bookManager.GetGenres();
+            //model.PossibleGenres = _bookManager.GetGenres();
             return View(model);
         }
 
         public ActionResult EditBook(int bookId)
         {
-            BookManager bookManager = new BookManager();
-            BookModel model = bookManager.GetBoook(bookId);
+            BookModel model = _bookManager.GetBoook(bookId);
             //model.PossibleGenres = bookManager.GetGenres();
             return View(model);
         }
@@ -50,16 +54,14 @@ namespace BooksOfMyLife.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(BookModel model)
         {
-            BookManager bookManager = new BookManager();
-            bookManager.AddNewBook(model);
+            _bookManager.AddNewBook(model);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult ListAllBooks()
         {
-            BookManager bookManager = new BookManager();
-            var models = bookManager.GetAllBooks();
+            var models = _bookManager.GetAllBooks();
             return View(models);
         }
 

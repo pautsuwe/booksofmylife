@@ -9,16 +9,30 @@ using System.Web;
 
 namespace BooksOfMyLife.Managers
 {
-    public class BookManager
+    public interface IBookManager
     {
+        int AddNewBook(BookModel model);
+        BookModel GetBoook(int id);
+        IEnumerable<BookModel> GetAllBooks();
+        IEnumerable<Genre> GetGenres();
+    }
+
+
+    public class BookManager : IBookManager
+    {
+        private BookContext _bookContext { get; set; }
+        public BookManager()
+        {
+            _bookContext = new BookContext();
+        }
+
         public int AddNewBook(BookModel model)
         {
-            BookContext context = new BookContext();
             var bookEntity = Mapper.Map<BookModel, Book>(model);
             bookEntity.CreatedAt = DateTime.Now;
             //bookEntity.CreatedBy = sovellusta käyttävä käyttäjä
-            var addedEntity = context.Books.Add(bookEntity);
-            context.SaveChanges();
+            var addedEntity = _bookContext.Books.Add(bookEntity);
+            _bookContext.SaveChanges();
 
             return addedEntity.ID;
         }
@@ -30,9 +44,8 @@ namespace BooksOfMyLife.Managers
 
         public IEnumerable<BookModel> GetAllBooks()
         {
-            BookContext context = new BookContext();
             List<BookModel> models = new List<BookModel>();
-            foreach(var book in context.Books)
+            foreach(var book in _bookContext.Books)
             {
                 var model = new BookModel();
                 model.CreatedAt = book.CreatedAt;
@@ -49,8 +62,7 @@ namespace BooksOfMyLife.Managers
 
         public IEnumerable<Genre> GetGenres()
         {
-            BookContext context = new BookContext();
-            return context.Genres;
+            return _bookContext.Genres;
         }
     }
 }
