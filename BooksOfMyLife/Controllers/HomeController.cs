@@ -1,6 +1,8 @@
-﻿using BooksOfMyLife.Models;
+﻿using BooksOfMyLife.Managers;
+using BooksOfMyLife.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,18 +30,37 @@ namespace BooksOfMyLife.Controllers
             return View();
         }
 
-        public ActionResult NewBook()
+        public ActionResult AddBook()
         {
-            return View();
+            BookManager bookManager = new BookManager();
+            BookModel model = new BookModel();
+            //model.PossibleGenres = bookManager.GetGenres();
+            return View(model);
+        }
+
+        public ActionResult EditBook(int bookId)
+        {
+            BookManager bookManager = new BookManager();
+            BookModel model = bookManager.GetBoook(bookId);
+            //model.PossibleGenres = bookManager.GetGenres();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(BookModel model)
         {
+            BookManager bookManager = new BookManager();
+            bookManager.AddNewBook(model);
 
+            return RedirectToAction("Index");
+        }
 
-            return Index();
+        public ActionResult ListAllBooks()
+        {
+            BookManager bookManager = new BookManager();
+            var models = bookManager.GetAllBooks();
+            return View(models);
         }
 
         private void ModelToEntity()

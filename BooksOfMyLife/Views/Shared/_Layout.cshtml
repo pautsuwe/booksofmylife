@@ -21,10 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Etusivu", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Omat kirjat", "GetOwnBooks", "Home")</li>
-                    <li>@Html.ActionLink("Kaikki kirjat", "GetAllBooks", "Home")</li>
-                    <li>@Html.ActionLink("Kirjakerho", "GetKkkBooks", "Home")</li>
+                    <li>@Html.ActionLink("Omat kirjat", "ListOwnBooks", "Home")</li>
+                    <li>@Html.ActionLink("Kaikki kirjat", "ListAllBooks", "Home")</li>
+                    <li>@Html.ActionLink("Kirjakerho", "ListKkkBooks", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

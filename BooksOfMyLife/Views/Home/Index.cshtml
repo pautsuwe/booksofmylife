@@ -4,17 +4,12 @@
 
 <div class="jumbotron">
     <h1>Elämäni kirjat</h1>
-    @Html.ActionLink("Lisää kirja", "NewBook", "Home", new { @class = "navbar-brand" })
+    @Html.ActionLink("Lisää kirja", "AddBook", "Home", new { @class = "navbar-brand" })
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Viimeisimmät lisätyt kirjat</h2>
-        @*<p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>*@
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Siirry kirjalistaukseen &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Viimeisimmät kommentit</h2>
+        <h2>Viimeisimmät toimet</h2>
         @*<p>
             ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
             enables a clean separation of concerns and gives you full control over markup
@@ -22,9 +17,4 @@
         </p>*@
         @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
     </div>    
-    <div class="col-md-4">
-        <h2>Viimeisimmät suositukset</h2>
-        @*<p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>*@
-        @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867"> &raquo;</a></p>*@
-    </div>
 </div>

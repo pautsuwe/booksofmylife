@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace BooksOfMyLife.Entities
+namespace BooksOfMyLife.Models
 {
-    [Table("Author")]
-    public class Author
+    public class AuthorModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int CountryId { get; set; }
+        //public Country SelectedCountry { get; set; }
 
-        public virtual Country Country { get; set; }
+        //public IEnumerable<Country> PossibleCountries { get; set; }
     }
 }
