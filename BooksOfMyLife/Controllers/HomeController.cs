@@ -21,32 +21,20 @@ namespace BooksOfMyLife.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
+        
         public ActionResult AddBook()
         {
             BookModel model = new BookModel();
-            //model.PossibleGenres = _bookManager.GetGenres();
+            model.PossibleGenres = _bookManager.GetGenres().ToList();
+            model.PossibleGenres.OrderBy(x => x.Name);
             return View(model);
         }
 
-        public ActionResult EditBook(int bookId)
+        public ActionResult EditBook(int id)
         {
-            BookModel model = _bookManager.GetBoook(bookId);
-            //model.PossibleGenres = bookManager.GetGenres();
+            BookModel model = _bookManager.GetBook(id);
+            model.PossibleGenres = _bookManager.GetGenres().ToList();
+            model.PossibleGenres.OrderBy(x => x.Name);
             return View(model);
         }
 
@@ -54,7 +42,14 @@ namespace BooksOfMyLife.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(BookModel model)
         {
-            _bookManager.AddNewBook(model);
+            if( model.Id > 0)
+            {
+                _bookManager.UpdateBook(model);
+            }
+            else
+            {
+                _bookManager.AddNewBook(model);
+            }            
 
             return RedirectToAction("Index");
         }
@@ -62,7 +57,19 @@ namespace BooksOfMyLife.Controllers
         public ActionResult ListAllBooks()
         {
             var models = _bookManager.GetAllBooks();
-            return View(models);
+            return View("ListBooks", models);
+        }
+
+        public ActionResult ListKkkBooks()
+        {
+            var models = _bookManager.GetKkkBooks();
+            return View("ListBooks", models);
+        }
+
+        public ActionResult ShowBookDetails(int id)
+        {
+            BookModel model = _bookManager.GetBook(id);
+            return View("BookDetails", model);
         }
 
         private void ModelToEntity()

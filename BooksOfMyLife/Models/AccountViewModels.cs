@@ -65,19 +65,28 @@ namespace BooksOfMyLife.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Etunimi")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Sukunimi")]
+        public string LastName { get; set; }
+        
+        [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Sähköposti")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Salasana")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Vahvista salasana")]
+        [Compare("Password", ErrorMessage = "Salasanat eivät täsmää.")]
         public string ConfirmPassword { get; set; }
     }
 

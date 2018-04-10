@@ -12,8 +12,10 @@ namespace BooksOfMyLife.Managers
     public interface IBookManager
     {
         int AddNewBook(BookModel model);
-        BookModel GetBoook(int id);
+        void UpdateBook(BookModel model);
+        BookModel GetBook(int id);
         IEnumerable<BookModel> GetAllBooks();
+        IEnumerable<BookModel> GetKkkBooks();
         IEnumerable<Genre> GetGenres();
     }
 
@@ -37,9 +39,19 @@ namespace BooksOfMyLife.Managers
             return addedEntity.ID;
         }
 
-        public BookModel GetBoook(int id)
+        public void UpdateBook(BookModel model)
         {
-            return new BookModel();
+            var bookEntity = Mapper.Map<BookModel, Book>(model);
+            var updatable = _bookContext.Books.Find(model.Id);
+            _bookContext.Entry(updatable).CurrentValues.SetValues(bookEntity);
+            _bookContext.SaveChanges();
+        }
+
+        public BookModel GetBook(int id)
+        {           
+            var bookEntity = _bookContext.Books.Find(id);
+            var model = Mapper.Map<Book, BookModel>(bookEntity);
+            return model;
         }
 
         public IEnumerable<BookModel> GetAllBooks()
@@ -47,15 +59,19 @@ namespace BooksOfMyLife.Managers
             List<BookModel> models = new List<BookModel>();
             foreach(var book in _bookContext.Books)
             {
-                var model = new BookModel();
-                model.CreatedAt = book.CreatedAt;
-                model.CreatedBy = book.CreatedBy;
-                model.Id = book.ID;
-                model.Name = book.Name;
-                model.PageCount = book.PageCount;
-                model.PublishingYear = book.PublishingYear;
+                var model = Mapper.Map<Book, BookModel>(book);
                 models.Add(model);
-                //models.Add(Mapper.Map<Book, BookModel>(book));
+            }
+            return models;
+        }
+
+        public IEnumerable<BookModel> GetKkkBooks()
+        {
+            List<BookModel> models = new List<BookModel>();
+            foreach (var book in _bookContext.Books.Where(x => x.isKKK))
+            {
+                var model = Mapper.Map<Book, BookModel>(book);
+                models.Add(model);
             }
             return models;
         }

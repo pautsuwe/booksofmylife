@@ -1,41 +1,27 @@
 ﻿@model BooksOfMyLife.Models.BookModel
-
+@using BooksOfMyLife.Helpers
 @{
     ViewBag.Title = "EditBook";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View</h2>
+<h2>Kirjan tietojen muokkaus</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Save", "Home"))
 {
     @Html.AntiForgeryToken()
-    
+        
     <div class="form-horizontal">
-        <h4>BookModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.CreatedAt)
+        @Html.HiddenFor(model => model.CreatedBy)
+
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedAt, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.RequiredLabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -43,7 +29,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PublishingYear, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.RequiredLabelFor(model => model.SelectedGenreId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedGenreId, new SelectList(Model.PossibleGenres, "Id", "Name", null), "Valitse", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SelectedGenreId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.RequiredLabelFor(model => model.PublishingYear, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PublishingYear, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PublishingYear, "", new { @class = "text-danger" })
@@ -51,7 +45,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.RequiredLabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PageCount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PageCount, "", new { @class = "text-danger" })
@@ -59,8 +53,20 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.isKKK, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.isKKK, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PageCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div>
+            <span>@(string.Format("{0} {1} {2}", "Lisännyt", Model.CreatedBy, Model.CreatedAt.ToShortDateString()))</span>            
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Tallenna" class="btn btn-default" />
             </div>
         </div>
     </div>

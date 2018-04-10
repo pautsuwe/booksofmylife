@@ -1,9 +1,15 @@
+using BooksOfMyLife.Controllers;
 using BooksOfMyLife.DAL;
 using BooksOfMyLife.Managers;
+using BooksOfMyLife.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-
+using System.Data.Entity;
 using Unity;
 using Unity.AspNet.Mvc;
+using Unity.Injection;
+using Unity.Lifetime;
 
 namespace BooksOfMyLife
 {
@@ -27,8 +33,15 @@ namespace BooksOfMyLife
         
         public static void RegisterTypes(IUnityContainer container)
         {
-            // TODO: Register your type's mappings here.
+            container.RegisterType<IdentityDbContext<ApplicationUser>, ApplicationDbContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<DbContext, BookContext>(new HierarchicalLifetimeManager());
+
             container.RegisterType<IBookManager, BookManager>();
+
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<AccountController>(new InjectionConstructor());
         }
     }
 }

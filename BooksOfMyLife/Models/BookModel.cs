@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BooksOfMyLife.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BooksOfMyLife.Models
 {
@@ -16,20 +18,27 @@ namespace BooksOfMyLife.Models
         [Display(Name = "Lisäysaika")]
         public DateTime CreatedAt { get; set; }
 
+        [Required]
         [Display(Name = "Nimi")]
         public string Name { get; set; }
 
+        [Required]
         [Display(Name = "Kirjailija")]
         public AuthorModel Author { get; set; }
 
         [Display(Name = "Julkaisuvuosi")]
         public int? PublishingYear { get; set; }
 
-        //public Genre SelectedGenre { get; set; }
+        [Required]
+        [Display(Name = "Genre")]
+        public int SelectedGenreId { get; set; }
 
         [Display(Name = "Sivumäärä")]
-        public int? PageCount { get; set; } 
-        
-        //public IEnumerable<Genre> PossibleGenres { get; set; }
+        public int? PageCount { get; set; }
+
+        [Display(Name="Kirjakerhokirja")]
+        public bool isKKK { get; set; }
+
+        public List<Genre> PossibleGenres { get; set; }
     }
 }

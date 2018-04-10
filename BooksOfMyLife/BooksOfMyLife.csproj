@@ -236,15 +236,28 @@
     <Compile Include="Entities\CommentReaction.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Genre.cs" />
-    <Compile Include="Entities\ReadingActivity.cs" />
+    <Compile Include="Entities\ReadingAction.cs" />
     <Compile Include="Entities\Recommendation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LabelExtensions.cs" />
     <Compile Include="Managers\BookManager.cs" />
     <Compile Include="Migrations\201801141836313_Migration.cs" />
     <Compile Include="Migrations\201801141836313_Migration.Designer.cs">
       <DependentUpon>201801141836313_Migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804100751052_kirjautumismigraatio.cs" />
+    <Compile Include="Migrations\201804100751052_kirjautumismigraatio.Designer.cs">
+      <DependentUpon>201804100751052_kirjautumismigraatio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804100856274_applicationUserFields.cs" />
+    <Compile Include="Migrations\201804100856274_applicationUserFields.Designer.cs">
+      <DependentUpon>201804100856274_applicationUserFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804100900374_userfields.cs" />
+    <Compile Include="Migrations\201804100900374_userfields.Designer.cs">
+      <DependentUpon>201804100900374_userfields.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -269,6 +282,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -280,7 +296,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -315,7 +333,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\AddBook.cshtml" />
-    <Content Include="Views\Home\ListAllBooks.cshtml" />
+    <Content Include="Views\Home\ListBooks.cshtml" />
     <Content Include="Views\Home\EditBook.cshtml" />
     <Content Include="Views\Home\BookDetails.cshtml" />
   </ItemGroup>
@@ -338,6 +356,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201801141836313_Migration.resx">
       <DependentUpon>201801141836313_Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804100751052_kirjautumismigraatio.resx">
+      <DependentUpon>201804100751052_kirjautumismigraatio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804100856274_applicationUserFields.resx">
+      <DependentUpon>201804100856274_applicationUserFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804100900374_userfields.resx">
+      <DependentUpon>201804100900374_userfields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
