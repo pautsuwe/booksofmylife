@@ -13,7 +13,10 @@ namespace BooksOfMyLife.Models
         public int Id { get; set; }
 
         [Display(Name = "Lisääjä")]
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
+
+        [Display(Name = "Lisääjä")]
+        public string CreatedByName { get; set; }
 
         [Display(Name = "Lisäysaika")]
         public DateTime CreatedAt { get; set; }
@@ -24,21 +27,31 @@ namespace BooksOfMyLife.Models
 
         [Required]
         [Display(Name = "Kirjailija")]
-        public AuthorModel Author { get; set; }
+        public int AuthorId { get; set; }
+
+        public Author Author { get; set; }
 
         [Display(Name = "Julkaisuvuosi")]
         public int? PublishingYear { get; set; }
 
-        [Required]
-        [Display(Name = "Genre")]
-        public int SelectedGenreId { get; set; }
+        //[Required]
+        //[Display(Name = "Genre")]
+        //public int GenreId { get; set; }
+        
+        //[Display(Name = "Genret")]
+        //public List<int> GenreIds { get; set; }
 
         [Display(Name = "Sivumäärä")]
         public int? PageCount { get; set; }
 
         [Display(Name="Kirjakerhokirja")]
-        public bool isKKK { get; set; }
+        public bool IsKKK { get; set; }
 
-        public List<Genre> PossibleGenres { get; set; }
+        [Display(Name="On luettu")]
+        public bool IsRead { get; set; }
+
+        public List<Genre> Genres { get; set; }
+        public List<AuthorModel> AllAuthors { get; set; }
+        public List<SelectListItem> PossibleGenres { get; set; }
     }
 }

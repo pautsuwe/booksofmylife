@@ -6,13 +6,18 @@ using System.Web;
 
 namespace BooksOfMyLife.Entities
 {
-    [Table("ReadingAction")]
-    public class ReadingAction
+    [Table("BookActivity")]
+    public class BookActivity
     {
         public int Id { get; set; }
-        public int BookId { get; set; }
+        public int BookId { get; set; }        
+        public string UserId { get; set; }
+        public bool IsRead { get; set; }
         public int? ReadingYear { get; set; }
         public int? Score { get; set; }
+        public bool OnWishList { get; set; }
+        
+        //huom. muokkauksessa voi lisätä vuoden ja arvostelun, listauksesta voi klikata luetuksi
 
         public virtual Book Book { get; set; }
     }

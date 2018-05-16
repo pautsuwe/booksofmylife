@@ -1,0 +1,9 @@
+﻿@model IEnumerable<BooksOfMyLife.Models.BookSimpleModel>
+
+@{   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Omat kirjat</h2>
+
+@Html.Partial("_ListBooksPartial", Model)

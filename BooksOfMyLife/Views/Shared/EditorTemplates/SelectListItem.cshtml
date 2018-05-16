@@ -1,0 +1,6 @@
+﻿@model SelectListItem
+
+@Html.HiddenFor(x => x.Value)
+@Html.CheckBoxFor(x => x.Selected)
+@Html.LabelFor(x => x.Selected, Model.Text)
+<br />

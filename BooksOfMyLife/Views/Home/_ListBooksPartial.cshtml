@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BooksOfMyLife.Models.BookSimpleModel>
+
+<p>
+    @Html.ActionLink("Lisää uusi", "AddBook")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr onclick="window.location='@Url.Action("ShowBookDetails", "Home", new {id=item.Id})'">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @(item.Author.FirstName + " " + item.Author.LastName)
+        </td>
+        <td>
+            <a href='@Url.Action("MarkBookAsRead", "Home")' data-id="@item.Id" class="markBooksAsRead">
+                <img src="~/Content/images/finished.png" class="@(item.IsRead ? "" : "notRead")"/>
+            </a>
+            <a href='@Url.Action("EditBook", "Home", new { id=item.Id })' >
+                <img src="~/Content/images/edit.png" />
+            </a>
+        </td>
+    </tr>
+}
+
+</table>

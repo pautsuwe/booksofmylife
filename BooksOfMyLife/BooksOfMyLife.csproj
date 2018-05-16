@@ -17,7 +17,7 @@
     <AssemblyName>BooksOfMyLife</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -227,21 +227,24 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\BookContext.cs" />
     <Compile Include="Entities\Author.cs" />
     <Compile Include="Entities\Book.cs" />
+    <Compile Include="Entities\BookGenre.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\CommentReaction.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Genre.cs" />
-    <Compile Include="Entities\ReadingAction.cs" />
+    <Compile Include="Entities\BookActivity.cs" />
     <Compile Include="Entities\Recommendation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\LabelExtensions.cs" />
+    <Compile Include="Managers\AuthorManager.cs" />
     <Compile Include="Managers\BookManager.cs" />
     <Compile Include="Migrations\201801141836313_Migration.cs" />
     <Compile Include="Migrations\201801141836313_Migration.Designer.cs">
@@ -273,6 +276,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\done.png" />
+    <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\finished.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -286,6 +292,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\general.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -333,9 +340,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\AddBook.cshtml" />
-    <Content Include="Views\Home\ListBooks.cshtml" />
+    <Content Include="Views\Home\_ListBooksPartial.cshtml" />
     <Content Include="Views\Home\EditBook.cshtml" />
     <Content Include="Views\Home\BookDetails.cshtml" />
+    <Content Include="Views\Author\_EditAuthorPartial.cshtml" />
+    <Content Include="Views\Home\OwnBooks.cshtml" />
+    <Content Include="Views\Home\AllBooks.cshtml" />
+    <Content Include="Views\Home\KkkBooks.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SelectListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -385,7 +397,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50742</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50742/</IISUrl>
+          <IISUrl>http://localhost/BooksOfMyLife</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

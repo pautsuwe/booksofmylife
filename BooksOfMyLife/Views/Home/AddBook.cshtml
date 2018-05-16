@@ -8,12 +8,12 @@
 <h2>Uusi kirja</h2>
 
 
-@using (Html.BeginForm("Save", "Home")) 
+@using (Html.BeginForm("Save", "Home"))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -24,21 +24,32 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            <label class="control-label col-md-2">Kirjailija</label>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-        
         <div class="form-group">
-            @Html.RequiredLabelFor(model => model.SelectedGenreId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SelectedGenreId, new SelectList(Model.PossibleGenres, "Id", "Name", null), "Valitse", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.SelectedGenreId, "", new { @class = "text-danger" })
+            @Html.RequiredLabelFor(model => model.AuthorId, new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.DropDownListFor(model => model.AuthorId, new SelectList(Model.AllAuthors, "Id", "WholeName", null), "Valitse", new { @class = "form-control", id = "ddl_Authors" })
+                @Html.ValidationMessageFor(model => model.AuthorId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-7">
+                <input type="button" value="Lisää kirjailija" id="addAuthor" class="btn btn-default" data-url="@Url.Action("AddAuthor", "Author")" />
             </div>
         </div>
+
+        @*<div class="form-group">
+            @Html.RequiredLabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("genres", Model.PossibleGenres, new { @class = "form-control", id = "genreSelection" })
+                @Html.ValidationMessageFor(model => model.Genres, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.RequiredLabelFor(model => model.Genres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PossibleGenres)                             
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.RequiredLabelFor(model => model.PublishingYear, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -47,7 +58,7 @@
                 @Html.ValidationMessageFor(model => model.PublishingYear, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.RequiredLabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -57,10 +68,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.isKKK, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IsKKK, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.isKKK, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PageCount, "", new { @class = "text-danger" })
+                @Html.CheckBoxFor(model => model.IsKKK, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsRead, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsRead, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
@@ -71,9 +88,15 @@
         </div>
     </div>
 }
-
 <div>
     @Html.ActionLink("Takaisin listaukseen", "Index")
+</div>
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

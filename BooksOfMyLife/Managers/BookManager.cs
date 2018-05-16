@@ -11,12 +11,16 @@ namespace BooksOfMyLife.Managers
 {
     public interface IBookManager
     {
-        int AddNewBook(BookModel model);
-        void UpdateBook(BookModel model);
-        BookModel GetBook(int id);
-        IEnumerable<BookModel> GetAllBooks();
-        IEnumerable<BookModel> GetKkkBooks();
+        int AddNewBook(Book model, ApplicationUser user);
+        void UpdateBook(Book model);
+        Book GetBook(int id);
+        IEnumerable<Book> GetAllBooks();
+        IEnumerable<Book> GetKkkBooks();
         IEnumerable<Genre> GetGenres();
+        IEnumerable<Book> GetOwnReadBooks(string userId);
+        BookActivity GetBookActivity(string userId, int bookId);
+        void UpdateBookActivity(BookActivity bookActivity);
+        void AddBookGenre(int bookId, int genreId);
     }
 
 
@@ -28,57 +32,85 @@ namespace BooksOfMyLife.Managers
             _bookContext = new BookContext();
         }
 
-        public int AddNewBook(BookModel model)
-        {
-            var bookEntity = Mapper.Map<BookModel, Book>(model);
+        public int AddNewBook(Book bookEntity, ApplicationUser user)
+        {            
             bookEntity.CreatedAt = DateTime.Now;
-            //bookEntity.CreatedBy = sovellusta käyttävä käyttäjä
+            bookEntity.CreatedBy = user.Id;
             var addedEntity = _bookContext.Books.Add(bookEntity);
             _bookContext.SaveChanges();
 
             return addedEntity.ID;
         }
 
-        public void UpdateBook(BookModel model)
-        {
-            var bookEntity = Mapper.Map<BookModel, Book>(model);
-            var updatable = _bookContext.Books.Find(model.Id);
-            _bookContext.Entry(updatable).CurrentValues.SetValues(bookEntity);
-            _bookContext.SaveChanges();
+        public void UpdateBook(Book bookEntity)
+        {            
+            var updatable = _bookContext.Books.Find(bookEntity.ID);
+            if( updatable != null)
+            {
+                _bookContext.Entry(updatable).CurrentValues.SetValues(bookEntity);
+                _bookContext.SaveChanges();
+            }
         }
 
-        public BookModel GetBook(int id)
+        public Book GetBook(int id)
         {           
-            var bookEntity = _bookContext.Books.Find(id);
-            var model = Mapper.Map<Book, BookModel>(bookEntity);
-            return model;
+            return _bookContext.Books.Find(id);
         }
 
-        public IEnumerable<BookModel> GetAllBooks()
-        {
-            List<BookModel> models = new List<BookModel>();
-            foreach(var book in _bookContext.Books)
-            {
-                var model = Mapper.Map<Book, BookModel>(book);
-                models.Add(model);
-            }
-            return models;
+        public IEnumerable<Book> GetAllBooks()
+        {            
+            return _bookContext.Books;
         }
 
-        public IEnumerable<BookModel> GetKkkBooks()
-        {
-            List<BookModel> models = new List<BookModel>();
-            foreach (var book in _bookContext.Books.Where(x => x.isKKK))
-            {
-                var model = Mapper.Map<Book, BookModel>(book);
-                models.Add(model);
-            }
-            return models;
+        public IEnumerable<Book> GetKkkBooks()
+        {            
+            return _bookContext.Books.Where(x => x.isKKK);
         }
 
         public IEnumerable<Genre> GetGenres()
         {
             return _bookContext.Genres;
+        }
+
+        public IEnumerable<Book> GetOwnReadBooks(string userId)
+        {
+            var ownBookActivities = _bookContext.BookActivities.Where(x => x.UserId == userId && x.IsRead);
+            var books = new List<Book>();
+            foreach (var activity in ownBookActivities)
+            {
+                var book = _bookContext.Books.Find(activity.BookId);
+                if (book != null) books.Add(book);
+            }
+            return books;
+        }
+
+        public BookActivity GetBookActivity(string userId, int bookId)
+        {
+            return _bookContext.BookActivities.SingleOrDefault(x => x.UserId == userId && x.BookId == bookId);            
+        }
+
+        public void UpdateBookActivity(BookActivity bookActivity)
+        {
+            if( bookActivity.Id > 0)
+            {
+                var updatable = _bookContext.BookActivities.Find(bookActivity.Id);
+                _bookContext.Entry(updatable).CurrentValues.SetValues(bookActivity);
+            }
+            else
+            {
+                _bookContext.BookActivities.Add(bookActivity);
+            }
+            _bookContext.SaveChanges();
+        }
+
+        public void AddBookGenre(int bookId, int genreId)
+        {
+            _bookContext.BookGenres.Add(new BookGenre()
+            {
+                BookId = bookId,
+                GenreId = genreId
+            });
+            _bookContext.SaveChanges();
         }
     }
 }

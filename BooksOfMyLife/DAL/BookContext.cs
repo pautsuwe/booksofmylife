@@ -19,8 +19,9 @@ namespace BooksOfMyLife.DAL
         public DbSet<Book> Books{ get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<BookGenre> BookGenres { get; set; }
         public DbSet<Country> Countries { get; set; }
-        public DbSet<ReadingAction> ReadingActions { get; set; }
+        public DbSet<BookActivity> BookActivities { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Recommendation> Recommendations { get; set; }
         public DbSet<CommentReaction> CommentReactions{ get; set; }

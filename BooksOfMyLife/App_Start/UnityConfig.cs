@@ -37,8 +37,9 @@ namespace BooksOfMyLife
             container.RegisterType<DbContext, BookContext>(new HierarchicalLifetimeManager());
 
             container.RegisterType<IBookManager, BookManager>();
+            container.RegisterType<IAuthorManager, AuthorManager>();
 
-            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>> ();
             container.RegisterType<UserManager<ApplicationUser>>(new HierarchicalLifetimeManager());
 
             container.RegisterType<AccountController>(new InjectionConstructor());
